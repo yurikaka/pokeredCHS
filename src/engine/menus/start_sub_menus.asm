@@ -106,8 +106,7 @@ StartMenu_Pokemon::
 .choseOutOfBattleMove
 	push hl
 	ld a, [wWhichPokemon]
-	ld hl, wPartyMonNicks
-	call GetPartyMonName
+	farcall GetPartyMonDisplayName
 	pop hl
 	ld a, [hl]
 	dec a
@@ -141,8 +140,7 @@ ELSE
 	jr z, .canFly
 ENDC
 	ld a, [wWhichPokemon]
-	ld hl, wPartyMonNicks
-	call GetPartyMonName
+	farcall GetPartyMonDisplayName
 	ld hl, .cannotFlyHereText
 	call PrintText
 	jp .loop
@@ -212,8 +210,7 @@ ENDC
 	call CheckIfInOutsideMap
 	jr z, .canTeleport
 	ld a, [wWhichPokemon]
-	ld hl, wPartyMonNicks
-	call GetPartyMonName
+	farcall GetPartyMonDisplayName
 	ld hl, .cannotUseTeleportNowText
 	call PrintText
 	jp .loop

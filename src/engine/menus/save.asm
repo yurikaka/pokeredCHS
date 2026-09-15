@@ -59,7 +59,7 @@ LoadSAV0:
 
 .checkSumsMatched
 	ld a, [sENGNameMark]
-	cp 2
+	cp 3
 	jr c, .hasENGNameMarkValue
 	ld a, 0
 	ld [wENGNameMark], a

@@ -545,24 +545,20 @@ DisplayOptionMenu:
 	jp .loop
 .cursorInExit
 	bit BIT_D_LEFT, b
-	jr nz, .pressedLeftInExit
-	jr .pressedRightInExit
-	jr .dontchange
-.pressedLeftInExit
-.pressedRightInExit
-	push af
-	push bc
-	push de
-	push hl
 	ld a, [wENGNameMark]
-	xor 1
-	ld [wENGNameMark],a
+	jr z, .pressedRightInExit
+	add 2
+	jr .wrapNameMode
+.pressedRightInExit
+	inc a
+
+.wrapNameMode
+	cp 3
+	jr c, .storeNameMode
+	sub 3
+.storeNameMode
+	ld [wENGNameMark], a
 	call DisplayName
-	pop af
-	pop bc
-	pop de
-	pop hl
-.dontchange
 	jr .loop
 	
 .checkDirectionKeys
@@ -777,11 +773,14 @@ Vertext:
 PMNamesPointerTable:
 	dw ChsText
 	dw EngText
+	dw MixedText
 	
 EngText:
 	db "English@"
 ChsText:
 	db "Chinese@"
+MixedText:
+	db $09, $ae, $09, $1c, "@" ; 混合
 ; table that indicates how the 3 text speed options affect frame delays
 ; Format:
 ; 00: X coordinate of menu cursor

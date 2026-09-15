@@ -358,6 +358,7 @@ INCLUDE "engine/items/tm_prices.asm"
 SECTION "Home 2", ROMX
 
 INCLUDE "home2.asm"
+INCLUDE "engine/pokemon/display_name.asm"
 
 SECTION "DFS", ROMX
 INCLUDE "dfs/dfs.asm"

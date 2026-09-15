@@ -338,9 +338,6 @@ BillsPCWithdraw:
 	jp c, BillsPCMenu
 	call DisplayDepositWithdrawMenu
 	jp nc, BillsPCMenu
-	ld a, [wWhichPokemon]
-	ld hl, wBoxMonNicks
-	call GetPartyMonName
 	ld a, [wcf91]
 	call GetCryData
 	call PlaySoundWaitForCurrent

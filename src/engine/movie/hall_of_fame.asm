@@ -151,8 +151,7 @@ HoFShowMonOrPlayer:
 
 HoFDisplayAndRecordMonInfo:
 	ld a, [wHoFPartyMonIndex]
-	ld hl, wPartyMonNicks
-	call GetPartyMonName
+	farcall GetPartyMonDisplayName
 	call HoFDisplayMonInfo
 	jp HoFRecordMonInfo
 
@@ -276,7 +275,9 @@ HoFRecordMonInfo:
 	ld [hli], a
 	ld e, l
 	ld d, h
-	ld hl, wcd6d
+	ld hl, wPartyMonNicks
+	ld a, [wHoFPartyMonIndex]
+	call SkipFixedLengthTextEntries
 	ld bc, NAME_LENGTH
 	jp CopyData
 

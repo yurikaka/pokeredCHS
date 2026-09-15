@@ -83,8 +83,7 @@ RedrawPartyMenu_::
 	push hl
 	ld a, c
 	push hl
-	ld hl, wPartyMonNicks
-	call GetPartyMonName
+	farcall GetPartyMonDisplayName
 
 
 	ld a, 15 | (0 << 7)
@@ -299,8 +298,7 @@ RedrawPartyMenu_::
 	ld l, a
 	push hl
 	ld a, [wUsedItemOnWhichPokemon]
-	ld hl, wPartyMonNicks
-	call GetPartyMonName
+	farcall GetPartyMonDisplayName
 	pop hl
 	call PrintText
 	jr .done
@@ -429,4 +427,3 @@ GetShortHealthBarColor::
 .gotColor
 	ld [hl], d
 	ret
-	

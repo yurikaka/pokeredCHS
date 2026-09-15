@@ -82,6 +82,7 @@ RedrawPartyMenu_::
 	push de
 	push hl
 	ld a, c
+	ld e, a
 	push hl
 	farcall GetPartyMonDisplayName
 
@@ -298,6 +299,7 @@ RedrawPartyMenu_::
 	ld l, a
 	push hl
 	ld a, [wUsedItemOnWhichPokemon]
+	ld e, a
 	farcall GetPartyMonDisplayName
 	pop hl
 	call PrintText

@@ -756,6 +756,12 @@ SetCursorPositionsFromOptions:
 	ret
 
 DisplayName:
+	push af
+	hlcoord 6, 16
+	ld de, PMNamesLabel
+	call PlaceString
+	pop af
+	push bc ; PlaceString returns the tile after the complete label in BC.
 	ld hl, PMNamesPointerTable
 	sla a
 	ld b, 0
@@ -764,7 +770,7 @@ DisplayName:
 	ld e, [hl]
 	inc hl
 	ld d, [hl]
-	hlcoord 6, 16
+	pop hl
 	call PlaceString
 	ret 
 
@@ -776,11 +782,13 @@ PMNamesPointerTable:
 	dw MixedText
 	
 EngText:
-	db "English@"
+	db $13, $60, $11, $70, "@" ; 英文
 ChsText:
-	db "Chinese@"
+	db $18, $c6, $11, $70, "@" ; 中文
 MixedText:
 	db $09, $ae, $09, $1c, "@" ; 混合
+PMNamesLabel:
+	db "ェ", "▶", $05, $2e, $0b, $29, $0c, $da, $0d, $0b, $06, $28, $01, $f0, "@" ; 宝可梦名称：
 ; table that indicates how the 3 text speed options affect frame delays
 ; Format:
 ; 00: X coordinate of menu cursor

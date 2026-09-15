@@ -525,3 +525,6 @@ SECTION "MISC", ROMX
 INCLUDE "engine/menus/naming_screen_util.asm"
 SECTION "IMECodeTable", ROMX
 INCLUDE "dfs/IMECodeTable.asm"
+
+SECTION "Mode 2 Intro Name Preset", ROMX, BANK[42]
+INCLUDE "engine/movie/oak_speech/mode2_player_rival_preset.asm"

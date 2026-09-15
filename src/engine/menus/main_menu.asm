@@ -776,19 +776,6 @@ DisplayName:
 
 Vertext:
 	db "ver@"
-PMNamesPointerTable:
-	dw ChsText
-	dw EngText
-	dw MixedText
-	
-EngText:
-	db $13, $60, $11, $70, "@" ; 英文
-ChsText:
-	db $18, $c6, $11, $70, "@" ; 中文
-MixedText:
-	db $09, $ae, $09, $1c, "@" ; 混合
-PMNamesLabel:
-	db "ェ", "▶", $05, $2e, $0b, $29, $0c, $da, $0d, $0b, $06, $28, $01, $f0, "@" ; 宝可梦名称：
 ; table that indicates how the 3 text speed options affect frame delays
 ; Format:
 ; 00: X coordinate of menu cursor

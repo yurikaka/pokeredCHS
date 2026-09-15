@@ -50,6 +50,22 @@ GetMonStoredDefaultName::
 	jr z, GetMonChineseName
 	jr GetMonEnglishName
 
+; The options menu lives in a switchable bank, but these strings are also used
+; there. Keeping them in the fixed bank lets PlaceString read them directly.
+PMNamesPointerTable::
+	dw ChsText
+	dw EngText
+	dw MixedText
+
+EngText:
+	db $13, $60, $11, $70, "@" ; 英文
+ChsText:
+	db $18, $c6, $11, $70, "@" ; 中文
+MixedText:
+	db $09, $ae, $09, $1c, "@" ; 混合
+PMNamesLabel::
+	db "ェ", "▶", $05, $2e, $0b, $29, $0c, $da, $0d, $0b, $06, $28, $01, $f0, "@" ; 宝可梦名称：
+
 GetItemName::
 ; given an item ID at [wd11e], store the name of the item into a string
 ;     starting at wcd6d

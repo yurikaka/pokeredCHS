@@ -43,6 +43,7 @@ DayCareMText1:
 	xor a
 	ld [wPartyAndBillsPCSavedMenuItem], a
 	ld a, [wWhichPokemon]
+	ld e, a
 	farcall GetPartyMonDisplayName
 	ld hl, DayCareWillLookAfterMonText
 	call PrintText
@@ -202,6 +203,7 @@ DayCareMText1:
 	call PlayCry
 	ld a, [wPartyCount]
 	dec a
+	ld e, a
 	farcall GetPartyMonDisplayName
 	ld hl, DayCareGotMonBackText
 	jr .done

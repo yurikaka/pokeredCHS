@@ -1,7 +1,7 @@
 ; Convert a stored Pokemon nickname to the name that should be displayed.
 ;
 ; Input:
-;   a  = species
+;   c  = species
 ;   de = direct pointer to the Pokemon's raw nickname
 ; Output:
 ;   de = wcd6d
@@ -13,6 +13,7 @@
 ; every other nickname is displayed unchanged.
 GetMonDisplayName::
 	push bc
+	ld a, c
 	ld b, a
 	ld a, [wd11e]
 	push af
@@ -61,9 +62,10 @@ GetMonDisplayName::
 ; The indexed wrappers deliberately resolve species and nickname from the same
 ; collection and slot. Callers never rely on an unrelated global species value.
 GetPartyMonDisplayName::
+	; Input: e = party slot. Bankswitch overwrites BC before entering a farcall.
 	push hl
 	push bc
-	ld c, a
+	ld c, e
 	ld b, 0
 	ld hl, wPartySpecies
 	add hl, bc
@@ -75,15 +77,17 @@ GetPartyMonDisplayName::
 	ld d, h
 	ld e, l
 	pop af
+	ld c, a
 	call GetMonDisplayName
 	pop bc
 	pop hl
 	ret
 
 GetEnemyMonDisplayName::
+	; Input: e = enemy party slot. Bankswitch overwrites BC before entering a farcall.
 	push hl
 	push bc
-	ld c, a
+	ld c, e
 	ld b, 0
 	ld hl, wEnemyPartySpecies
 	add hl, bc
@@ -95,15 +99,17 @@ GetEnemyMonDisplayName::
 	ld d, h
 	ld e, l
 	pop af
+	ld c, a
 	call GetMonDisplayName
 	pop bc
 	pop hl
 	ret
 
 GetBoxMonDisplayName::
+	; Input: e = box slot. Bankswitch overwrites BC before entering a farcall.
 	push hl
 	push bc
-	ld c, a
+	ld c, e
 	ld b, 0
 	ld hl, wBoxSpecies
 	add hl, bc
@@ -115,6 +121,7 @@ GetBoxMonDisplayName::
 	ld d, h
 	ld e, l
 	pop af
+	ld c, a
 	call GetMonDisplayName
 	pop bc
 	pop hl
@@ -122,18 +129,24 @@ GetBoxMonDisplayName::
 
 GetDayCareMonDisplayName::
 	ld a, [wDayCareMonSpecies]
+	ld c, a
 	ld de, wDayCareMonName
 	jp GetMonDisplayName
 
 GetListMonDisplayName::
-; Input: a = slot in the party/box list selected by wListPointer.
-	ld c, a
+; Input: e = slot in the party/box list selected by wListPointer.
 	ld hl, wPartyCount
 	ld a, [wListPointer]
 	cp l
-	ld a, c
 	jp z, GetPartyMonDisplayName
 	jp GetBoxMonDisplayName
+
+GetHoFMonDisplayName::
+; Input: de = Hall of Fame raw nickname pointer.
+; The caller's species is already recorded in wHoFMonSpecies.
+	ld a, [wHoFMonSpecies]
+	ld c, a
+	jp GetMonDisplayName
 
 RenameEvolvedMon::
 ; Renames the mon to its new, evolved form's stored default name unless it had

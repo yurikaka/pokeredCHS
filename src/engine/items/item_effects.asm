@@ -642,6 +642,7 @@ ItemUseBall:
 .printTransferredToPCText
 	push hl
 	xor a
+	ld e, a
 	farcall GetBoxMonDisplayName
 	pop hl
 	call PrintText
@@ -1350,6 +1351,7 @@ ItemUseMedicine:
 	call GetMonHeader
 	push de
 	ld a, d
+	ld e, a
 	farcall GetPartyMonDisplayName
 	pop de
 	pop hl
@@ -2309,6 +2311,7 @@ ItemUseTMHM:
 	predef CanLearnTM ; check if the pokemon can learn the move
 	push bc
 	ld a, [wWhichPokemon]
+	ld e, a
 	farcall GetPartyMonDisplayName
 	pop bc
 	ld a, c

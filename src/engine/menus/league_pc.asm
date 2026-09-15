@@ -91,8 +91,7 @@ LeaguePCShowMon:
 	ld [wHoFMonLevel], a
 	ld d, h
 	ld e, l
-	ld a, [wHoFMonSpecies]
-	farcall GetMonDisplayName
+	farcall GetHoFMonDisplayName
 	ld b, SET_PAL_POKEMON_WHOLE_SCREEN
 	ld c, 0
 	call RunPaletteCommand

@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 filepath=$(cd "$(dirname "$0")"; pwd)
 cd "$filepath"
 option=$1
@@ -9,8 +10,7 @@ else
 make --always-make RGBDS=rgbds-cn/ CHAR_FLAGS="-D RGBDS_WCHAR"
 fi
 
-mkdir roms
-mkdir roms/rgb
+mkdir -p roms/rgb
 
 cp pokered.gbc roms/rgb/pokered."$option".gbc
 cp pokered_vc.gbc roms/rgb/pokered_vc."$option".gbc
